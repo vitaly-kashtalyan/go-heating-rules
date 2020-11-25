@@ -1,0 +1,60 @@
+{
+  "radiators": {
+    "temperature": 22,
+    "parent_relay_id": 8,
+    "relays": [
+      {
+        "pin": 1,
+        "dec": "",
+        "relay": 10,
+        "name": "room 1",
+        "enable": true,
+        "schedule": [
+          {
+            "time": "22:00 PM",
+            "temperature": 22.5
+          },
+          {
+            "time": "04:00 AM",
+            "temperature": 23.5
+          }
+        ]
+      },
+      {
+        "pin": 2,
+        "dec": "dec",
+        "relay": 11,
+        "name": "room 2",
+        "enable": false,
+        "schedule": []
+      }
+    ]
+  },
+  "floors": {
+    "temperature": 24,
+    "parent_relay_id": 3,
+    "relays": [
+      {
+        "pin": 10,
+        "dec": "",
+        "relay": 1,
+        "name": "floor 1",
+        "enable": true,
+        "schedule": [
+          {
+            "time": "22:00 PM",
+            "temperature": 22.5
+          }
+        ]
+      },
+      {
+        "pin": 20,
+        "dec": "dec",
+        "relay": 2,
+        "name": "floor 2",
+        "enable": true,
+        "schedule": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+    restart: always
+    container_name: go_heating_rules_app
+    volumes:
+      - ./config:/root/config:rw,delegated
+    ports:
+      - 8071:8080
+    tty: true
