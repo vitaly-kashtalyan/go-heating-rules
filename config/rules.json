@@ -1,60 +1,94 @@
 {
-  "radiators": {
-    "temperature": 22,
-    "parent_relay_id": 8,
-    "relays": [
+ "circuits": [
+  {
+   "name": "radiators",
+   "temperature": 22,
+   "parent_relay_id": 8,
+   "relays": [
+    {
+     "pin": 1,
+     "dec": "",
+     "relay_id": 0,
+     "name": "room 100",
+     "enable": true,
+     "schedule": [
       {
-        "pin": 1,
-        "dec": "",
-        "relay": 10,
-        "name": "room 1",
-        "enable": true,
-        "schedule": [
-          {
-            "time": "22:00 PM",
-            "temperature": 22.5
-          },
-          {
-            "time": "04:00 AM",
-            "temperature": 23.5
-          }
-        ]
+       "time": "07:00 PM",
+       "temperature": 20.5
       },
       {
-        "pin": 2,
-        "dec": "dec",
-        "relay": 11,
-        "name": "room 2",
-        "enable": false,
-        "schedule": []
+       "time": "09:22 AM",
+       "temperature": 5000
+      },
+      {
+       "time": "07:01 AM",
+       "temperature": 4000
+      },
+      {
+       "time": "07:02 AM",
+       "temperature": 1200
       }
-    ]
+     ]
+    },
+    {
+     "pin": 2,
+     "dec": "dec",
+     "relay_id": 1,
+     "name": "room 2",
+     "enable": false,
+     "schedule": [
+      {
+       "time": "12:00 AM",
+       "temperature": 22.222
+      }
+     ]
+    }
+   ]
   },
-  "floors": {
-    "temperature": 24,
-    "parent_relay_id": 3,
-    "relays": [
+  {
+   "name": "floors",
+   "temperature": 22,
+   "parent_relay_id": 8,
+   "relays": [
+    {
+     "pin": 1,
+     "dec": "",
+     "relay_id": 2,
+     "name": "room 100",
+     "enable": true,
+     "schedule": [
       {
-        "pin": 10,
-        "dec": "",
-        "relay": 1,
-        "name": "floor 1",
-        "enable": true,
-        "schedule": [
-          {
-            "time": "22:00 PM",
-            "temperature": 22.5
-          }
-        ]
+       "time": "07:00 PM",
+       "temperature": 20.5
       },
       {
-        "pin": 20,
-        "dec": "dec",
-        "relay": 2,
-        "name": "floor 2",
-        "enable": true,
-        "schedule": []
+       "time": "09:22 AM",
+       "temperature": 5000
+      },
+      {
+       "time": "07:01 AM",
+       "temperature": 4000
+      },
+      {
+       "time": "07:02 AM",
+       "temperature": 1200
       }
-    ]
+     ]
+    },
+    {
+     "pin": 2,
+     "dec": "dec",
+     "relay_id": 33,
+     "name": "room 2",
+     "enable": false,
+     "schedule": [
+      {
+       "time": "12:00 AM",
+       "temperature": 22.222
+      }
+     ]
+    }
+   ]
   }
+ ]
 }
