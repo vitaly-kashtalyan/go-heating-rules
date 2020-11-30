@@ -198,19 +198,19 @@ func appendSensorsData(rules Rules) (s []Sensor) {
 }
 
 func getTemperatureBySchedule(s []Schedule, t float32) (temp float32) {
-	now := time.Now().UTC()
-	prevTime := now
+	now := time.Now()
+	prevDiff := 999999.9
 	temp = t
 
 	if len(s) != 0 {
 		for _, h := range s {
-			prepareTime := fmt.Sprintf("%v-%v-%v %v", now.Year(), now.Month().String(), now.Day(), h.Time)
-			timeT, err := time.Parse("2006-January-02 15:04 PM", prepareTime)
+			prepareTime := fmt.Sprintf("%v-%v-%v %v +0300", now.Year(), now.Month().String(), now.Day(), h.Time)
+			timeT, err := time.Parse("2006-January-02 15:04 PM -0700", prepareTime)
 			if err == nil {
-				if now.After(timeT) && now.Equal(prevTime) ||
-					now.After(timeT) && !now.Equal(prevTime) && timeT.After(prevTime) && timeT.Before(now) {
+				diff := now.Sub(timeT).Seconds()
+				if diff > 0 && prevDiff > diff {
 					temp = h.Temperature
-					prevTime = timeT
+					prevDiff = diff
 				}
 			}
 		}
