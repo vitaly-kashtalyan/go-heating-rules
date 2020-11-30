@@ -6,6 +6,8 @@ COPY main.go .
 RUN go build -o main .
 
 FROM alpine:latest
+RUN apk add --no-cache tzdata
+ENV TZ Europe/Minsk
 WORKDIR /root
 COPY config/rules.json config/rules.json
 COPY --from=build /app/main .
