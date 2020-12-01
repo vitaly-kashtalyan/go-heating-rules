@@ -205,7 +205,7 @@ func getTemperatureBySchedule(s []Schedule, t float32) (temp float32) {
 	if len(s) != 0 {
 		for _, h := range s {
 			prepareTime := fmt.Sprintf("%v-%v-%v %v +0300", now.Year(), now.Month().String(), now.Day(), h.Time)
-			timeT, err := time.Parse("2006-January-02 15:04 PM -0700", prepareTime)
+			timeT, err := time.Parse("2006-January-2 15:04 PM -0700", prepareTime)
 			if err == nil {
 				diff := now.Sub(timeT).Seconds()
 				if diff > 0 && prevDiff > diff {
