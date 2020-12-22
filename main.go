@@ -26,7 +26,6 @@ func main() {
 	e.GET("/rules", rules)
 	e.GET("/sensors", sensors)
 	e.PATCH("/relays", relays)
-	e.POST("/schedule", schedule)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
@@ -65,11 +64,6 @@ func relays(c echo.Context) error {
 	return prepareResponse(c, err)
 }
 
-func schedule(c echo.Context) error {
-	err := updateSchedule(c)
-	return prepareResponse(c, err)
-}
-
 func prepareResponse(c echo.Context, err error) error {
 	if err != nil {
 		code := http.StatusInternalServerError
@@ -95,6 +89,10 @@ func updateRelay(c echo.Context) (err error) {
 	if err != nil {
 		return
 	}
+	err = validateSchedule(jsonBody.Schedule)
+	if err != nil {
+		return
+	}
 	for ci, circuit := range rules.Circuits {
 		for i, _ := range circuit.Relays {
 			if jsonBody.Pin == rules.Circuits[ci].Relays[i].Pin && jsonBody.Dec == rules.Circuits[ci].Relays[i].Dec {
@@ -104,34 +102,6 @@ func updateRelay(c echo.Context) (err error) {
 				if jsonBody.Enable != nil {
 					rules.Circuits[ci].Relays[i].Enable = *jsonBody.Enable
 				}
-				isNotFound = false
-			}
-		}
-	}
-	if isNotFound {
-		return fmt.Errorf("Not Found")
-	}
-	return writeObjectToJson(rules)
-}
-
-func updateSchedule(c echo.Context) (err error) {
-	isNotFound := true
-	rules, err := getRules()
-	if err != nil {
-		return
-	}
-	var jsonBody schedulePatch
-	err = c.Bind(&jsonBody)
-	if err != nil {
-		return
-	}
-	err = validateSchedule(jsonBody.Schedule)
-	if err != nil {
-		return
-	}
-	for ci, circuit := range rules.Circuits {
-		for i, _ := range circuit.Relays {
-			if jsonBody.Pin == rules.Circuits[ci].Relays[i].Pin && jsonBody.Dec == rules.Circuits[ci].Relays[i].Dec {
 				if len(jsonBody.Schedule) == 0 {
 					rules.Circuits[ci].Relays[i].Schedule = []Schedule{}
 				} else {
@@ -268,14 +238,15 @@ type Sensor struct {
 }
 
 type relayPatch struct {
-	Pin    int    `json:"pin" binding:"required"`
-	Dec    string `json:"dec"`
-	Name   string `json:"name,omitempty"`
-	Enable *bool  `json:"enable"`
-}
-
-type schedulePatch struct {
 	Pin      int        `json:"pin" binding:"required"`
 	Dec      string     `json:"dec"`
+	Name     string     `json:"name,omitempty"`
+	Enable   *bool      `json:"enable"`
 	Schedule []Schedule `json:"schedule"`
 }
+
+//type schedulePatch struct {
+//	Pin      int        `json:"pin" binding:"required"`
+//	Dec      string     `json:"dec"`
+//	Schedule []Schedule `json:"schedule"`
+//}
