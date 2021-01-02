@@ -178,6 +178,9 @@ func getTemperatureBySchedule(s []Schedule, t float32) (temp float32) {
 			timeT, err := time.Parse("2006-January-2 15:04 PM -0700", prepareTime)
 			if err == nil {
 				diff := now.Sub(timeT).Seconds()
+				if diff < 0 {
+					diff = now.Sub(timeT.Add(-24 * time.Hour)).Seconds()
+				}
 				if diff > 0 && prevDiff > diff {
 					temp = h.Temperature
 					prevDiff = diff
