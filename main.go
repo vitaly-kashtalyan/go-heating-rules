@@ -168,7 +168,7 @@ func appendSensorsData(rules Rules) (s []Sensor) {
 }
 
 func getTemperatureBySchedule(s []Schedule, t float32) (temp float32) {
-	now := time.Now()
+	now := time.Now().In(time.FixedZone("UTC+3", 3*60*60))
 	prevDiff := 999999.9
 	temp = t
 
@@ -244,9 +244,3 @@ type relayPatch struct {
 	Enable   *bool      `json:"enable"`
 	Schedule []Schedule `json:"schedule"`
 }
-
-//type schedulePatch struct {
-//	Pin      int        `json:"pin" binding:"required"`
-//	Dec      string     `json:"dec"`
-//	Schedule []Schedule `json:"schedule"`
-//}
